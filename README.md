@@ -177,6 +177,46 @@ python -m unittest discover -s tests -p "test_*.py" -v
 
 > 说明：涉及 Excel 读写的测试依赖 `pandas/openpyxl`，若环境未安装会自动 `skip`，不会阻塞其它测试。
 
+
+
+## 8. 本地网页界面（导入 + 排课 + 结果导出）
+
+为方便部署后试运行，Web UI 已按你要求补齐三阶段闭环：
+
+### 第一阶段：导入 / 下载模板
+
+- 模板下载：
+  - 理论课模板：`/api/template/theory`
+  - 实验室模板：`/api/template/lab`
+  - 实验任务模板：`/api/template/task`
+- 模板导入：
+  - 上传理论课 Excel → 写入 `theory_slots`
+  - 上传实验室 Excel → 写入 `labs`
+  - 上传实验任务 Excel → 写入 `lab_tasks`
+- 导入预览：
+  - 显示读取条数
+  - 缺失字段列表
+  - 值格式错误信息
+
+### 第二阶段：排课执行（Demo）
+
+页面按钮：**开始排课**（`POST /api/schedule/run`）
+
+后端最小排课逻辑：
+1. 先按课程匹配实验室（`supported_courses`）
+2. 再按容量筛选（`capacity >= student_count`）
+3. 按任务期望周/期望星期尝试安排
+4. 若冲突或无可用实验室，进入未排课并记录原因
+
+### 第三阶段：排课结果展示 / 导出
+
+页面展示：
+- 已排课：任务编号、班级、课程、实验项目、实验室、周次、星期、节次、教师
+- 未排课：任务编号、班级、课程、实验项目、未排原因
+
+结果导出：
+- 下载 `schedule_result.xlsx`：`/api/schedule/export`
+=======
 ## 8. 本地网页界面（手工维护配置）
 
 为方便部署后试运行，新增了一个本地 Web 配置界面，可手动维护：
@@ -185,6 +225,7 @@ python -m unittest discover -s tests -p "test_*.py" -v
 - 实验室（编号/名称/容量/校区/可用课程）
 - 学期配置（学期名/开学日期/总周数/每日节次/工作日）
 - 法定节假日（日期+名称）
+
 
 ### 启动界面
 
@@ -196,7 +237,6 @@ python -m webui.server --port 8000
 
 ### 数据存储
 
-- 界面加载与保存均走 `/api/config`
+- 配置读取/保存：`/api/config`
 - 默认配置文件：`data/ui_config.json`
 - 你可以直接编辑该 JSON，或在网页里维护后点击“保存配置”。
-
