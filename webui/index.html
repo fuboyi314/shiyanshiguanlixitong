@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>实验室排课配置中心</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>实验室排课配置中心</h1>
+    <p>支持模板下载、Excel 导入预览、手工维护、一键排课与结果导出。</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>第一阶段：模板下载 + Excel 导入</h2>
+      <div class="inline-row wrap">
+        <a class="btn-link" href="/api/template/theory">下载理论课模板</a>
+        <a class="btn-link" href="/api/template/lab">下载实验室模板</a>
+        <a class="btn-link" href="/api/template/task">下载实验任务模板</a>
+      </div>
+      <div class="import-grid">
+        <div>
+          <label>导入理论课 Excel</label>
+          <input id="import_theory" type="file" accept=".xlsx,.xls" />
+          <button data-import="theory">上传并导入</button>
+        </div>
+        <div>
+          <label>导入实验室 Excel</label>
+          <input id="import_lab" type="file" accept=".xlsx,.xls" />
+          <button data-import="lab">上传并导入</button>
+        </div>
+        <div>
+          <label>导入实验任务 Excel</label>
+          <input id="import_task" type="file" accept=".xlsx,.xls" />
+          <button data-import="task">上传并导入</button>
+        </div>
+      </div>
+      <pre id="import_preview" class="preview-box"></pre>
+    </section>
+
+    <section class="panel">
+      <h2>学期配置</h2>
+      <div class="grid-2">
+        <label>学期名称 <input id="semester_name" type="text" /></label>
+        <label>开学日期 <input id="start_date" type="date" /></label>
+        <label>学期总周数 <input id="total_weeks" type="number" min="1" /></label>
+        <label>每日节次数 <input id="periods_per_day" type="number" min="1" /></label>
+        <label>工作日（1-7,逗号分隔） <input id="working_days" type="text" placeholder="1,2,3,4,5" /></label>
+      </div>
+      <h3>法定节假日</h3>
+      <div class="inline-row">
+        <input id="holiday_date" type="date" />
+        <input id="holiday_name" type="text" placeholder="例如：国庆节" />
+        <button id="add_holiday">添加节假日</button>
+      </div>
+      <table>
+        <thead><tr><th>日期</th><th>名称</th><th>操作</th></tr></thead>
+        <tbody id="holiday_table"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>理论课 / 实验室 / 实验任务（当前数据）</h2>
+      <p class="muted">说明：建议优先通过 Excel 导入；下方主要用于查看与删除。</p>
+
+      <h3>理论课</h3>
+      <table>
+        <thead><tr><th>班级</th><th>课程</th><th>教师</th><th>星期</th><th>节次</th><th>周次</th><th>操作</th></tr></thead>
+        <tbody id="theory_table"></tbody>
+      </table>
+
+      <h3>实验室</h3>
+      <table>
+        <thead><tr><th>编号</th><th>名称</th><th>容量</th><th>校区</th><th>可用课程</th><th>操作</th></tr></thead>
+        <tbody id="lab_table"></tbody>
+      </table>
+
+      <h3>实验任务</h3>
+      <table>
+        <thead><tr><th>任务编号</th><th>班级</th><th>课程</th><th>实验项目</th><th>人数</th><th>期望周/星期</th><th>操作</th></tr></thead>
+        <tbody id="task_table"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>第二阶段：排课执行</h2>
+      <button id="run_schedule" class="primary">开始排课</button>
+      <span id="schedule_summary" class="status-inline"></span>
+    </section>
+
+    <section class="panel">
+      <h2>第三阶段：排课结果展示 + 导出</h2>
+      <div class="inline-row wrap">
+        <a class="btn-link" href="/api/schedule/export">下载 schedule_result.xlsx</a>
+      </div>
+
+      <h3>已排课</h3>
+      <table>
+        <thead><tr><th>任务编号</th><th>班级</th><th>课程</th><th>实验项目</th><th>实验室</th><th>周次</th><th>星期</th><th>节次</th><th>教师</th></tr></thead>
+        <tbody id="scheduled_table"></tbody>
+      </table>
+
+      <h3>未排课</h3>
+      <table>
+        <thead><tr><th>任务编号</th><th>班级</th><th>课程</th><th>实验项目</th><th>未排原因</th></tr></thead>
+        <tbody id="unscheduled_table"></tbody>
+      </table>
+    </section>
+
+    <section class="panel actions">
+      <button id="load_btn">加载配置</button>
+      <button id="save_btn" class="primary">保存配置</button>
+      <span id="status_text"></span>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>

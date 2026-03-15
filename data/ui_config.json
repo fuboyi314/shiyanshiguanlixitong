@@ -1,0 +1,19 @@
+{
+  "semester": {
+    "semester_name": "2025-2026-1",
+    "start_date": "2025-09-01",
+    "total_weeks": 16,
+    "periods_per_day": 10,
+    "working_days": [1, 2, 3, 4, 5],
+    "holidays": [
+      {"date": "2025-10-01", "name": "国庆节"}
+    ]
+  },
+  "theory_slots": [],
+  "labs": [],
+  "lab_tasks": [],
+  "schedule_result": {
+    "scheduled_items": [],
+    "unscheduled_items": []
+  }
+}
