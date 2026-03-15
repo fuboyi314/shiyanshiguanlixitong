@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>实验室排课配置中心</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>实验室排课配置中心</h1>
+    <p>支持手动维护理论课、实验室、学期时长与法定节假日，并保存为本地 JSON 配置。</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>学期配置</h2>
+      <div class="grid-2">
+        <label>学期名称 <input id="semester_name" type="text" /></label>
+        <label>开学日期 <input id="start_date" type="date" /></label>
+        <label>学期总周数 <input id="total_weeks" type="number" min="1" /></label>
+        <label>每日节次数 <input id="periods_per_day" type="number" min="1" /></label>
+        <label>工作日（1-7,逗号分隔） <input id="working_days" type="text" placeholder="1,2,3,4,5" /></label>
+      </div>
+      <h3>法定节假日</h3>
+      <div class="inline-row">
+        <input id="holiday_date" type="date" />
+        <input id="holiday_name" type="text" placeholder="例如：国庆节" />
+        <button id="add_holiday">添加节假日</button>
+      </div>
+      <table>
+        <thead><tr><th>日期</th><th>名称</th><th>操作</th></tr></thead>
+        <tbody id="holiday_table"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>理论课管理</h2>
+      <div class="grid-3">
+        <input id="th_class_name" type="text" placeholder="班级" />
+        <input id="th_course_name" type="text" placeholder="课程" />
+        <input id="th_teacher" type="text" placeholder="教师" />
+        <input id="th_weekday" type="number" min="1" max="7" placeholder="星期" />
+        <input id="th_start_period" type="number" min="1" placeholder="开始节次" />
+        <input id="th_end_period" type="number" min="1" placeholder="结束节次" />
+        <input id="th_weeks" type="text" placeholder="周次，如 1-16 或 1,3,5" />
+        <input id="th_semester" type="text" placeholder="学期(可选)" />
+        <button id="add_theory">添加理论课</button>
+      </div>
+      <table>
+        <thead><tr><th>班级</th><th>课程</th><th>教师</th><th>星期</th><th>节次</th><th>周次</th><th>操作</th></tr></thead>
+        <tbody id="theory_table"></tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>实验室管理</h2>
+      <div class="grid-3">
+        <input id="lab_id" type="text" placeholder="实验室编号" />
+        <input id="lab_name" type="text" placeholder="实验室名称" />
+        <input id="lab_capacity" type="number" min="1" placeholder="容量" />
+        <input id="lab_campus" type="text" placeholder="校区" />
+        <input id="lab_courses" type="text" placeholder="可用课程(逗号分隔)" />
+        <button id="add_lab">添加实验室</button>
+      </div>
+      <table>
+        <thead><tr><th>编号</th><th>名称</th><th>容量</th><th>校区</th><th>可用课程</th><th>操作</th></tr></thead>
+        <tbody id="lab_table"></tbody>
+      </table>
+    </section>
+
+    <section class="panel actions">
+      <button id="load_btn">加载配置</button>
+      <button id="save_btn" class="primary">保存配置</button>
+      <span id="status_text"></span>
+    </section>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
