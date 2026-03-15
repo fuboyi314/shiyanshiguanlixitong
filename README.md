@@ -177,8 +177,6 @@ python -m unittest discover -s tests -p "test_*.py" -v
 
 > 说明：涉及 Excel 读写的测试依赖 `pandas/openpyxl`，若环境未安装会自动 `skip`，不会阻塞其它测试。
 
-
-
 ## 8. 本地网页界面（手工维护配置）
 
 为方便部署后试运行，新增了一个本地 Web 配置界面，可手动维护：
@@ -201,3 +199,4 @@ python -m webui.server --port 8000
 - 界面加载与保存均走 `/api/config`
 - 默认配置文件：`data/ui_config.json`
 - 你可以直接编辑该 JSON，或在网页里维护后点击“保存配置”。
+
